@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer-Activity — решение для удалённой работы</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background-color: #f7f9fb;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    header {
+      max-width: 800px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    .features {
+      margin-top: 2rem;
+      max-width: 800px;
+    }
+    .feature {
+      background: white;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .cta {
+      margin-top: 2rem;
+      background: #2d72d9;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cta:hover {
+      background: #1a4fa1;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⏱️ Timer-Activity</h1>
+    <p>Скрипт для сохранения RDP-сессии во время удалённой работы</p>
+  </header>
+
+  <section class="features">
+    <div class="feature">🖥 Имитирует активность системы только при бездействии более 4 минут</div>
+    <div class="feature">🪟 Простое окно с таймером и кнопкой "Stop"</div>
+    <div class="feature">🔒 Безопасен, не требует установки или прав администратора</div>
+    <div class="feature">⚙️ Работает без установки, по двойному клику</div>
+    <div class="feature">🎁 Есть демо-версия для проверки совместимости</div>
+  </section>
+
+  <button class="cta" onclick="window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip'">Скачать демо</button>
+
+  <p style="margin-top:1rem; font-size: 0.9rem; color: #555;">
+    🔐 SHA256: <code>66dd19162b667111f13ab4a1fc1eadc31f68f1a65250762872084638ecdbd4d3</code><br>
+    <small>Проверьте после загрузки: <code>Get-FileHash demo_test.zip -Algorithm SHA256</code></small>
+  </p>
+
+  <footer>
+    © 2025 Timer-Activity. Для связи: t.me/your_channel
+  </footer>
+</body>
+</html>
