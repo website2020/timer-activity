@@ -1,43 +1,100 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" translate="no">
 <head>
+  <meta name="google" content="notranslate">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timer-Activity — решение для удалённой работы</title>
   <style>
-    body {
+    :root {
+      --max-width: 800px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: system-ui, sans-serif;
       background-color: #f7f9fb;
       color: #222;
+      height: 100%;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
     }
+
     header {
-      max-width: 800px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: #f7f9fb;
+      padding: 2rem 1rem 1rem;
       text-align: center;
+      width: 100%;
+      max-width: var(--max-width);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
+
+    .lang-switch {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      color: #2d72d9;
+    }
+
     h1 {
       font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      margin: 0 0 0.5rem;
     }
-    p {
+
+    .subtitle span {
+      display: none;
       font-size: 1.2rem;
       line-height: 1.6;
     }
-    .features {
-      margin-top: 2rem;
-      max-width: 800px;
+
+    .subtitle span[data-lang="ru"] {
+      display: inline;
     }
+
+    main {
+      padding: 1rem;
+      width: 100%;
+      max-width: var(--max-width);
+      flex: 1;
+    }
+
+    .features {
+      margin-top: 1rem;
+    }
+
     .feature {
       background: white;
       padding: 1rem 1.5rem;
       margin-bottom: 1rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      min-height: 3.5rem;
+      display: flex;
+      align-items: center;
     }
+
+    .feature span {
+      display: none;
+    }
+
+    .feature span[data-lang="ru"] {
+      display: inline;
+    }
+
     .cta {
       margin-top: 2rem;
       background: #2d72d9;
@@ -49,18 +106,34 @@
       cursor: pointer;
       transition: background 0.3s;
     }
+
     .cta:hover {
       background: #1a4fa1;
     }
+
+    .hash {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .hash code {
+      word-break: break-all;
+    }
+
     footer {
       margin-top: 3rem;
       font-size: 0.9rem;
       color: #666;
+      text-align: center;
+      padding-bottom: 2rem;
     }
+
     a {
-     color: #2d72d9;
-     text-decoration: underline;
+      color: #2d72d9;
+      text-decoration: underline;
     }
+
     a:hover {
       color: #1a4fa1;
     }
@@ -68,46 +141,105 @@
 </head>
 <body>
   <header>
+    <div class="lang-switch" onclick="switchLang()">
+      🌐 <span id="lang-toggle">EN</span>
+    </div>
     <h1>⏱️ Timer-Activity</h1>
-    <p>Скрипт для сохранения RDP-сессии во время удалённой работы</p>
+    <div class="subtitle">
+      <span data-lang="ru">Скрипт для сохранения RDP-сессии во время удалённой работы</span>
+      <span data-lang="en">A script to keep your RDP session active during remote work</span>
+    </div>
   </header>
 
-  <section class="features">
-    <div class="feature">🖥 Имитирует активность системы только при бездействии более 4 минут</div>
-    <div class="feature">🪟 Простое окно с таймером и кнопкой "Stop"</div>
-    <div class="feature">🔒 Безопасен, не требует установки или прав администратора</div>
-    <div class="feature">⚙️ Работает без установки, по двойному клику</div>
-    <div class="feature">🎁 Есть демо-версия для проверки совместимости</div>
-  </section>
+  <main>
+    <section class="features">
+      <div class="feature">
+        <span data-lang="ru">🖥 Имитирует активность системы только при бездействии более 4 минут</span>
+        <span data-lang="en">🖥 Simulates user activity only after 4 minutes of inactivity</span>
+      </div>
+      <div class="feature">
+        <span data-lang="ru">🪟 Простое окно с таймером и кнопкой "Stop"</span>
+        <span data-lang="en">🪟 Simple window with a timer and "Stop" button</span>
+      </div>
+      <div class="feature">
+        <span data-lang="ru">🔒 Безопасен, не требует установки или прав администратора</span>
+        <span data-lang="en">🔒 Safe, does not require installation or admin rights</span>
+      </div>
+      <div class="feature">
+        <span data-lang="ru">⚙️ Работает без установки, по двойному клику</span>
+        <span data-lang="en">⚙️ Just double-click to run</span>
+      </div>
+      <div class="feature">
+        <span data-lang="ru">🎁 Есть демо-версия для проверки совместимости</span>
+        <span data-lang="en">🎁 Demo version available to test compatibility</span>
+      </div>
+    </section>
 
-  <button class="cta" onclick="ym(102414042, 'reachGoal', 'download_demo'); window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip';">
-   Скачать демо
-  </button
-  
-  <p style="margin-top:1rem; font-size: 0.9rem; color: #555;">
-    🔐 SHA256: <code>66dd19162b667111f13ab4a1fc1eadc31f68f1a65250762872084638ecdbd4d3</code><br>
-    <small>Проверьте после загрузки: <code>Get-FileHash demo_test.zip -Algorithm SHA256</code></small>
-  </p>
+    <button class="cta" onclick="ym(102414042, 'reachGoal', 'download_demo'); window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip';">
+      <span data-lang="ru">Скачать демо</span>
+      <span data-lang="en">Download Demo</span>
+    </button>
+
+    <div class="hash">
+      🔐 SHA256:
+      <code>66dd19162b667111f13ab4a1fc1eadc31f68f1a65250762872084638ecdbd4d3</code><br>
+      <small>
+        <span data-lang="ru">Проверьте после загрузки: <code>Get-FileHash demo_test.zip -Algorithm SHA256</code></span>
+        <span data-lang="en">Verify after download: <code>Get-FileHash demo_test.zip -Algorithm SHA256</code></span>
+      </small>
+    </div>
+  </main>
 
   <footer>
-    © 2025 Timer-Activity. Для связи: <a href="https://t.me/StayOnlineTeam">t.me/StayOnlineTeam</a>
+    <div class="footer-text">
+      <span data-lang="ru">© 2025 Timer-Activity. Для связи: <a href="https://t.me/StayOnlineTeam">t.me/StayOnlineTeam</a></span>
+      <span data-lang="en">© 2025 Timer-Activity. Contact: <a href="https://t.me/StayOnlineTeam">t.me/StayOnlineTeam</a></span>
+    </div>
   </footer>
-     <!-- Yandex.Metrika counter -->
-   <script type="text/javascript" >
-      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-      ym(102414042, "init", {
-           clickmap:true,
-           trackLinks:true,
-           accurateTrackBounce:true,
-           webvisor:true
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {
+      if (document.scripts[j].src === r) return;
+    }
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],
+    k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(102414042, "init", {
+      clickmap:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/102414042" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+  <!-- Language toggle logic -->
+  <script>
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.getElementById('lang-toggle').innerText = lang === 'ru' ? 'EN' : 'RU';
+
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? 'inline' : 'none';
       });
-   </script>
-   <noscript><div><img src="https://mc.yandex.ru/watch/102414042" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-   <!-- /Yandex.Metrika counter -->
+    }
+
+    function switchLang() {
+      const current = document.documentElement.lang;
+      const newLang = current === 'ru' ? 'en' : 'ru';
+      setLang(newLang);
+    }
+
+    // Инициализация языка при загрузке
+    document.addEventListener('DOMContentLoaded', () => {
+      setLang('ru'); // язык по умолчанию
+    });
+  </script>
+
 </body>
 </html>
