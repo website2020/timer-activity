@@ -1,19 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru" translate="no">
+<html lang="en">
 <head>
-  <meta name="google" content="notranslate">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timer-Activity — решение для удалённой работы</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timer-Activity — Keep your RDP session alive</title>
   <style>
-    :root {
-      --max-width: 800px;
-    }
-
     * {
       box-sizing: border-box;
     }
-
     html, body {
       margin: 0;
       padding: 0;
@@ -22,81 +16,62 @@
       color: #222;
       height: 100%;
     }
-
     body {
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
-
-    header {
+    .header {
       position: sticky;
       top: 0;
+      background: #f7f9fb;
       z-index: 10;
-      background-color: #f7f9fb;
-      padding: 2rem 1rem 1rem;
+      padding: 1rem 1rem 0 1rem;
       text-align: center;
-      width: 100%;
-      max-width: var(--max-width);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-
-    .lang-switch {
-      position: absolute;
-      top: 1rem;
-      right: 1.5rem;
-      font-size: 0.95rem;
+    .language-switcher {
+      text-align: right;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .language-switcher a {
+      margin-left: 1rem;
       cursor: pointer;
       color: #2d72d9;
+      text-decoration: none;
     }
-
-    h1 {
+    .language-switcher a:hover {
+      text-decoration: underline;
+    }
+    header h1 {
       font-size: 2.5rem;
-      margin: 0 0 0.5rem;
+      margin: 0.2rem 0;
     }
-
-    .subtitle span {
-      display: none;
+    header p {
       font-size: 1.2rem;
-      line-height: 1.6;
+      margin: 0.2rem 0 1rem 0;
     }
-
-    .subtitle span[data-lang="ru"] {
-      display: inline;
-    }
-
     main {
-      padding: 1rem;
-      width: 100%;
-      max-width: var(--max-width);
       flex: 1;
+      display: flex;
+      justify-content: center;
     }
-
+    .content {
+      width: 100%;
+      max-width: 800px;
+      padding: 1rem;
+    }
     .features {
       margin-top: 1rem;
     }
-
     .feature {
       background: white;
       padding: 1rem 1.5rem;
       margin-bottom: 1rem;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      min-height: 3.5rem;
-      display: flex;
-      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
-
-    .feature span {
-      display: none;
-    }
-
-    .feature span[data-lang="ru"] {
-      display: inline;
-    }
-
     .cta {
-      margin-top: 2rem;
+      margin-top: 1rem;
       background: #2d72d9;
       color: white;
       padding: 1rem 2rem;
@@ -105,141 +80,160 @@
       font-size: 1.2rem;
       cursor: pointer;
       transition: background 0.3s;
+      width: 100%;
     }
-
     .cta:hover {
       background: #1a4fa1;
     }
-
-    .hash {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    .hash code {
-      word-break: break-all;
-    }
-
     footer {
-      margin-top: 3rem;
+      margin: 2rem auto 1rem auto;
+      text-align: center;
       font-size: 0.9rem;
       color: #666;
-      text-align: center;
-      padding-bottom: 2rem;
+      max-width: 800px;
     }
-
-    a {
-      color: #2d72d9;
-      text-decoration: underline;
-    }
-
-    a:hover {
-      color: #1a4fa1;
+    code {
+      background-color: #eee;
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="lang-switch" onclick="switchLang()">
-      🌐 <span id="lang-toggle">EN</span>
+  <div class="header">
+    <div class="language-switcher">
+      <a onclick="setLang('en')">EN</a>
+      <a onclick="setLang('ru')">RU</a>
+      <a onclick="setLang('de')">DE</a>
+      <a onclick="setLang('fr')">FR</a>
+      <a onclick="setLang('es')">ES</a>
+      <a onclick="setLang('zh')">中文</a>
+      <a onclick="setLang('pt')">PT</a>
     </div>
-    <h1>⏱️ Timer-Activity</h1>
-    <div class="subtitle">
-      <span data-lang="ru">Скрипт для сохранения RDP-сессии во время удалённой работы</span>
-      <span data-lang="en">A script to keep your RDP session active during remote work</span>
-    </div>
-  </header>
+    <header>
+      <h1>⏱️ Timer-Activity</h1>
+      <p id="subtitle">A script that keeps your RDP session alive during remote work</p>
+    </header>
+  </div>
 
   <main>
-    <section class="features">
-      <div class="feature">
-        <span data-lang="ru">🖥 Имитирует активность системы только при бездействии более 4 минут</span>
-        <span data-lang="en">🖥 Simulates user activity only after 4 minutes of inactivity</span>
-      </div>
-      <div class="feature">
-        <span data-lang="ru">🪟 Простое окно с таймером и кнопкой "Stop"</span>
-        <span data-lang="en">🪟 Simple window with a timer and "Stop" button</span>
-      </div>
-      <div class="feature">
-        <span data-lang="ru">🔒 Безопасен, не требует установки или прав администратора</span>
-        <span data-lang="en">🔒 Safe, does not require installation or admin rights</span>
-      </div>
-      <div class="feature">
-        <span data-lang="ru">⚙️ Работает без установки, по двойному клику</span>
-        <span data-lang="en">⚙️ Just double-click to run</span>
-      </div>
-      <div class="feature">
-        <span data-lang="ru">🎁 Есть демо-версия для проверки совместимости</span>
-        <span data-lang="en">🎁 Demo version available to test compatibility</span>
-      </div>
-    </section>
+    <div class="content">
+      <section class="features">
+        <div class="feature" data-i18n="feature1">🖥 Simulates activity only after 4 minutes of user inactivity</div>
+        <div class="feature" data-i18n="feature2">🪟 Simple window with a timer and "Stop" button</div>
+        <div class="feature" data-i18n="feature3">🔒 Safe: no install or admin rights required</div>
+        <div class="feature" data-i18n="feature4">⚙️ Just double-click to run</div>
+        <div class="feature" data-i18n="feature5">🎁 Demo version available to test compatibility</div>
+      </section>
 
-    <button class="cta" onclick="ym(102414042, 'reachGoal', 'download_demo'); window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip';">
-      <span data-lang="ru">Скачать демо</span>
-      <span data-lang="en">Download Demo</span>
-    </button>
+      <button class="cta" id="downloadBtn" onclick="window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip';">
+        Download Demo
+      </button>
 
-    <div class="hash">
-      🔐 SHA256:
-      <code>66dd19162b667111f13ab4a1fc1eadc31f68f1a65250762872084638ecdbd4d3</code><br>
-      <small>
-        <span data-lang="ru">Проверьте после загрузки: <code>Get-FileHash demo_test.zip -Algorithm SHA256</code></span>
-        <span data-lang="en">Verify after download: <code>Get-FileHash demo_test.zip -Algorithm SHA256</code></span>
-      </small>
+      <p style="margin-top:1rem; font-size: 0.9rem; color: #555;">
+        🔐 SHA256: <code>66dd19162b667111f13ab4a1fc1eadc31f68f1a65250762872084638ecdbd4d3</code><br />
+        <span id="checkText">Verify after download:</span>
+        <code>Get-FileHash demo_test.zip -Algorithm SHA256</code>
+      </p>
     </div>
   </main>
 
   <footer>
-    <div class="footer-text">
-      <span data-lang="ru">© 2025 Timer-Activity. Для связи: <a href="https://t.me/StayOnlineTeam">t.me/StayOnlineTeam</a></span>
-      <span data-lang="en">© 2025 Timer-Activity. Contact: <a href="https://t.me/StayOnlineTeam">t.me/StayOnlineTeam</a></span>
-    </div>
+    <div id="footerText">© 2025 Timer-Activity. Contact: <a href="https://t.me/StayOnlineTeam">t.me/StayOnlineTeam</a></div>
   </footer>
 
-
-  <!-- Yandex.Metrika counter -->
-  <script type="text/javascript">
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {
-      if (document.scripts[j].src === r) return;
-    }
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],
-    k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-    ym(102414042, "init", {
-      clickmap:true,
-      trackLinks:true,
-      accurateTrackBounce:true,
-      webvisor:true
-    });
-  </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/102414042" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-
-  <!-- Language toggle logic -->
   <script>
+    const translations = {
+      en: {
+        subtitle: "A script that keeps your RDP session alive during remote work",
+        feature1: "🖥 Simulates activity only after 4 minutes of user inactivity",
+        feature2: "🪟 Simple window with a timer and \"Stop\" button",
+        feature3: "🔒 Safe: no install or admin rights required",
+        feature4: "⚙️ Just double-click to run",
+        feature5: "🎁 Demo version available to test compatibility",
+        button: "Download Demo",
+        checkText: "Verify after download:",
+        footer: "© 2025 Timer-Activity. Contact: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
+      },
+      ru: {
+        subtitle: "Скрипт для сохранения RDP-сессии во время удалённой работы",
+        feature1: "🖥 Имитирует активность системы только при бездействии более 4 минут",
+        feature2: "🪟 Простое окно с таймером и кнопкой \"Stop\"",
+        feature3: "🔒 Безопасен, не требует установки или прав администратора",
+        feature4: "⚙️ Работает без установки, по двойному клику",
+        feature5: "🎁 Есть демо-версия для проверки совместимости",
+        button: "Скачать демо",
+        checkText: "Проверьте после загрузки:",
+        footer: "© 2025 Timer-Activity. Для связи: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
+      },
+      de: {
+        subtitle: "Ein Skript, das Ihre RDP-Sitzung bei Remote-Arbeit aktiv hält",
+        feature1: "🖥 Simuliert Aktivität nur nach 4 Minuten Inaktivität",
+        feature2: "🪟 Einfaches Fenster mit Timer und \"Stopp\"-Taste",
+        feature3: "🔒 Sicher: Keine Installation oder Adminrechte erforderlich",
+        feature4: "⚙️ Doppelklick zum Starten",
+        feature5: "🎁 Demo-Version zur Kompatibilitätsprüfung verfügbar",
+        button: "Demo herunterladen",
+        checkText: "Nach dem Herunterladen überprüfen:",
+        footer: "© 2025 Timer-Activity. Kontakt: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
+      },
+      fr: {
+        subtitle: "Un script qui maintient votre session RDP active en télétravail",
+        feature1: "🖥 Simule l'activité après 4 minutes d'inactivité",
+        feature2: "🪟 Fenêtre simple avec minuteur et bouton \"Stop\"",
+        feature3: "🔒 Sûr : aucune installation ou droits administrateur requis",
+        feature4: "⚙️ Double-cliquez pour lancer",
+        feature5: "🎁 Version démo disponible pour tester la compatibilité",
+        button: "Télécharger la démo",
+        checkText: "Vérifiez après le téléchargement:",
+        footer: "© 2025 Timer-Activity. Contact : <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
+      },
+      es: {
+        subtitle: "Un script que mantiene viva tu sesión RDP durante el trabajo remoto",
+        feature1: "🖥 Simula actividad solo tras 4 minutos de inactividad",
+        feature2: "🪟 Ventana sencilla con temporizador y botón \"Stop\"",
+        feature3: "🔒 Seguro: no necesita instalación ni permisos de administrador",
+        feature4: "⚙️ Haz doble clic para ejecutar",
+        feature5: "🎁 Versión demo disponible para probar compatibilidad",
+        button: "Descargar demo",
+        checkText: "Verificar tras descargar:",
+        footer: "© 2025 Timer-Activity. Contacto: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
+      },
+      zh: {
+        subtitle: "一款在远程工作中保持RDP会话活跃的脚本",
+        feature1: "🖥 仅在用户4分钟无操作后模拟活动",
+        feature2: "🪟 简洁窗口，带计时器和\"Stop\"按钮",
+        feature3: "🔒 安全：无需安装或管理员权限",
+        feature4: "⚙️ 双击运行",
+        feature5: "🎁 提供演示版本以测试兼容性",
+        button: "下载演示版",
+        checkText: "下载后请验证:",
+        footer: "© 2025 Timer-Activity. 联系方式: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
+      },
+      pt: {
+        subtitle: "Um script que mantém sua sessão RDP ativa durante o trabalho remoto",
+        feature1: "🖥 Simula atividade após 4 minutos de inatividade",
+        feature2: "🪟 Janela simples com cronômetro e botão \"Stop\"",
+        feature3: "🔒 Seguro: não requer instalação ou permissões de administrador",
+        feature4: "⚙️ Basta clicar duas vezes para executar",
+        feature5: "🎁 Versão demo disponível para testar compatibilidade",
+        button: "Baixar demo",
+        checkText: "Verifique após o download:",
+        footer: "© 2025 Timer-Activity. Contato: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
+      }
+    };
+
     function setLang(lang) {
-      document.documentElement.lang = lang;
-      document.getElementById('lang-toggle').innerText = lang === 'ru' ? 'EN' : 'RU';
-
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.style.display = el.getAttribute('data-lang') === lang ? 'inline' : 'none';
+      const t = translations[lang];
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t[el.dataset.i18n];
       });
+      document.getElementById('downloadBtn').textContent = t.button;
+      document.getElementById('checkText').textContent = t.checkText;
+      document.getElementById('footerText').innerHTML = t.footer;
+      document.documentElement.lang = lang;
     }
-
-    function switchLang() {
-      const current = document.documentElement.lang;
-      const newLang = current === 'ru' ? 'en' : 'ru';
-      setLang(newLang);
-    }
-
-    // Инициализация языка при загрузке
-    document.addEventListener('DOMContentLoaded', () => {
-      setLang('ru'); // язык по умолчанию
-    });
   </script>
-
 </body>
 </html>
