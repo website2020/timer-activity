@@ -1,15 +1,15 @@
-# TIMER-ACTIVITY SCRIPT — ТЕСТОВАЯ ВЕРСИЯ
+# TIMER-ACTIVITY SCRIPT — TEST VERSION
 
-## 🔧 Инструкция
+## 🔧 Instructions
 
-1. Запустите `test.vbe` (двойной щелчок).
-2. Откроется окно с таймером — это значит, что программа работает.
-3. Не трогайте клавиатуру и мышь **10 минут**.
-4. Если сессия останется активной, появится окно: **"Тест Ок"**.
-5. Нажмите **OK** — программа завершится.
-6. В папке появится файл `id.txt` — он нужен для активации полной версии.
-7. Пришлите этот файл автору: [@StayOnlineTeam](https://t.me/StayOnlineTeam)
+1. Run `test.vbe` (double-click).
+2. A timer window will open — this means the program is running.
+3. Do not touch the keyboard or mouse for **10 minutes**.
+4. If the session remains active, a window will appear: **"Test OK"**.
+5. Click **OK** — the program will exit.
+6. A file named `id.txt` will appear in the folder — it's needed to activate the full version.
+7. Send this file to the author: [@StayOnlineTeam](https://t.me/StayOnlineTeam)
 
 ---
 
-✅ После успешного теста и оплаты вы получите рабочую версию.
+✅ After successful testing and payment, you will receive the full version.
