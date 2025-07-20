@@ -5,111 +5,122 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timer-Activity — Keep your RDP session alive</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, sans-serif;
-      background-color: #f7f9fb;
-      color: #222;
-      height: 100%;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-    .header {
-      position: sticky;
-      top: 0;
-      background: #f7f9fb;
-      z-index: 10;
-      padding: 1rem 1rem 0 1rem;
-      text-align: center;
-    }
-    .language-switcher {
-      text-align: right;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .language-switcher a {
-      margin-left: 1rem;
-      cursor: pointer;
-      color: #2d72d9;
-      text-decoration: none;
-    }
-    .language-switcher a:hover {
-      text-decoration: underline;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0.2rem 0;
-    }
-    header p {
-      font-size: 1.2rem;
-      margin: 0.2rem 0 1rem 0;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-    }
-    .content {
-      width: 100%;
-      max-width: 800px;
-      padding: 1rem;
-    }
-    .features {
-      margin-top: 1rem;
-    }
-    .feature {
-      background: white;
-      padding: 1rem 1.5rem;
-      margin-bottom: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .cta {
-      margin-top: 1rem;
-      background: #2d72d9;
-      color: white;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: background 0.3s;
-      width: 100%;
-    }
-    .cta:hover {
-      background: #1a4fa1;
-    }
-    footer {
-      margin: 2rem auto 1rem auto;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      max-width: 800px;
-    }
-    code {
-      background-color: #eee;
-      padding: 0.2em 0.4em;
-      border-radius: 4px;
-    }
-  </style>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+    background-color: #f7f9fb;
+    color: #222;
+    height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    position: sticky;
+    top: 0;
+    background: #f7f9fb;
+    z-index: 10;
+    padding: 1rem 1rem 0 1rem;
+    text-align: center;
+  }
+.language-switcher {
+  text-align: right;
+  max-width: 1200px;
+  margin: 0 auto 0.5rem auto;
+}
+
+.language-switcher a {
+  margin-left: 1rem;
+  cursor: pointer;
+  color: #2d72d9; /* Цвет по умолчанию */
+  text-decoration: none;
+  font-weight: normal;
+  transition: color 0.3s, text-decoration 0.3s;
+}
+
+.language-switcher a:hover {
+  text-decoration: underline; /* Подчёркивание при наведении */
+}
+
+.language-switcher a.active-lang {
+  text-decoration: underline; /* Подчёркивание выбранной */
+  font-weight: normal;         /* Более жирный шрифт */
+  color: #2d72d9;            /* Цвет не меняется */
+}
+
+  header h1 {
+    font-size: 2.5rem;
+    margin: 0.2rem 0;
+  }
+  header p {
+    font-size: 1.2rem;
+    margin: 0.2rem 0 1rem 0;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .content {
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem;
+  }
+  .features {
+    margin-top: 1rem;
+  }
+  .feature {
+    background: white;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  .cta {
+    margin-top: 1rem;
+    background: #2d72d9;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+  }
+  .cta:hover {
+    background: #1a4fa1;
+  }
+  footer {
+    margin: 2rem auto 1rem auto;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    max-width: 800px;
+  }
+  code {
+    background-color: #eee;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+  }
+</style>
 </head>
 <body>
   <div class="header">
     <div class="language-switcher">
-      <a onclick="setLang('en')">EN</a>
-      <a onclick="setLang('ru')">RU</a>
-      <a onclick="setLang('de')">DE</a>
-      <a onclick="setLang('fr')">FR</a>
-      <a onclick="setLang('es')">ES</a>
-      <a onclick="setLang('zh')">中文</a>
-      <a onclick="setLang('pt')">PT</a>
+      <a class="lang-btn" data-lang="en">EN</a>
+      <a class="lang-btn" data-lang="ru">RU</a>
+      <a class="lang-btn" data-lang="de">DE</a>
+      <a class="lang-btn" data-lang="fr">FR</a>
+      <a class="lang-btn" data-lang="es">ES</a>
+      <a class="lang-btn" data-lang="zh">中文</a>
+      <a class="lang-btn" data-lang="pt">PT</a>
     </div>
     <header>
       <h1>⏱️ Timer-Activity</h1>
@@ -120,11 +131,11 @@
   <main>
     <div class="content">
       <section class="features">
-        <div class="feature" data-i18n="feature1">🖥 Simulates activity only after 4 minutes of user inactivity</div>
-        <div class="feature" data-i18n="feature2">🪟 Simple window with a timer and "Stop" button</div>
-        <div class="feature" data-i18n="feature3">🔒 Safe: no install or admin rights required</div>
-        <div class="feature" data-i18n="feature4">⚙️ Just double-click to run</div>
-        <div class="feature" data-i18n="feature5">🎁 Demo version available to test compatibility</div>
+        <div class="feature" data-i18n="feature1"></div>
+        <div class="feature" data-i18n="feature2"></div>
+        <div class="feature" data-i18n="feature3"></div>
+        <div class="feature" data-i18n="feature4"></div>
+        <div class="feature" data-i18n="feature5"></div>
       </section>
 
       <button class="cta" id="downloadBtn" onclick="window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip';">
@@ -143,98 +154,138 @@
     <div id="footerText">© 2025 Timer-Activity. Contact: <a href="https://t.me/StayOnlineTeam">t.me/StayOnlineTeam</a></div>
   </footer>
 
-  <script>
-    const translations = {
-      en: {
-        subtitle: "A script that keeps your RDP session alive during remote work",
-        feature1: "🖥 Simulates activity only after 4 minutes of user inactivity",
-        feature2: "🪟 Simple window with a timer and \"Stop\" button",
-        feature3: "🔒 Safe: no install or admin rights required",
-        feature4: "⚙️ Just double-click to run",
-        feature5: "🎁 Demo version available to test compatibility",
-        button: "Download Demo",
-        checkText: "Verify after download:",
-        footer: "© 2025 Timer-Activity. Contact: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
-      },
-      ru: {
-        subtitle: "Скрипт для сохранения RDP-сессии во время удалённой работы",
-        feature1: "🖥 Имитирует активность системы только при бездействии более 4 минут",
-        feature2: "🪟 Простое окно с таймером и кнопкой \"Stop\"",
-        feature3: "🔒 Безопасен, не требует установки или прав администратора",
-        feature4: "⚙️ Работает без установки, по двойному клику",
-        feature5: "🎁 Есть демо-версия для проверки совместимости",
-        button: "Скачать демо",
-        checkText: "Проверьте после загрузки:",
-        footer: "© 2025 Timer-Activity. Для связи: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
-      },
-      de: {
-        subtitle: "Ein Skript, das Ihre RDP-Sitzung bei Remote-Arbeit aktiv hält",
-        feature1: "🖥 Simuliert Aktivität nur nach 4 Minuten Inaktivität",
-        feature2: "🪟 Einfaches Fenster mit Timer und \"Stopp\"-Taste",
-        feature3: "🔒 Sicher: Keine Installation oder Adminrechte erforderlich",
-        feature4: "⚙️ Doppelklick zum Starten",
-        feature5: "🎁 Demo-Version zur Kompatibilitätsprüfung verfügbar",
-        button: "Demo herunterladen",
-        checkText: "Nach dem Herunterladen überprüfen:",
-        footer: "© 2025 Timer-Activity. Kontakt: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
-      },
-      fr: {
-        subtitle: "Un script qui maintient votre session RDP active en télétravail",
-        feature1: "🖥 Simule l'activité après 4 minutes d'inactivité",
-        feature2: "🪟 Fenêtre simple avec minuteur et bouton \"Stop\"",
-        feature3: "🔒 Sûr : aucune installation ou droits administrateur requis",
-        feature4: "⚙️ Double-cliquez pour lancer",
-        feature5: "🎁 Version démo disponible pour tester la compatibilité",
-        button: "Télécharger la démo",
-        checkText: "Vérifiez après le téléchargement:",
-        footer: "© 2025 Timer-Activity. Contact : <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
-      },
-      es: {
-        subtitle: "Un script que mantiene viva tu sesión RDP durante el trabajo remoto",
-        feature1: "🖥 Simula actividad solo tras 4 minutos de inactividad",
-        feature2: "🪟 Ventana sencilla con temporizador y botón \"Stop\"",
-        feature3: "🔒 Seguro: no necesita instalación ni permisos de administrador",
-        feature4: "⚙️ Haz doble clic para ejecutar",
-        feature5: "🎁 Versión demo disponible para probar compatibilidad",
-        button: "Descargar demo",
-        checkText: "Verificar tras descargar:",
-        footer: "© 2025 Timer-Activity. Contacto: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
-      },
-      zh: {
-        subtitle: "一款在远程工作中保持RDP会话活跃的脚本",
-        feature1: "🖥 仅在用户4分钟无操作后模拟活动",
-        feature2: "🪟 简洁窗口，带计时器和\"Stop\"按钮",
-        feature3: "🔒 安全：无需安装或管理员权限",
-        feature4: "⚙️ 双击运行",
-        feature5: "🎁 提供演示版本以测试兼容性",
-        button: "下载演示版",
-        checkText: "下载后请验证:",
-        footer: "© 2025 Timer-Activity. 联系方式: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
-      },
-      pt: {
-        subtitle: "Um script que mantém sua sessão RDP ativa durante o trabalho remoto",
-        feature1: "🖥 Simula atividade após 4 minutos de inatividade",
-        feature2: "🪟 Janela simples com cronômetro e botão \"Stop\"",
-        feature3: "🔒 Seguro: não requer instalação ou permissões de administrador",
-        feature4: "⚙️ Basta clicar duas vezes para executar",
-        feature5: "🎁 Versão demo disponível para testar compatibilidade",
-        button: "Baixar demo",
-        checkText: "Verifique após o download:",
-        footer: "© 2025 Timer-Activity. Contato: <a href=\"https://t.me/StayOnlineTeam\">t.me/StayOnlineTeam</a>"
-      }
-    };
+<script> 
+const languages = ['ru', 'en', 'de', 'fr', 'es', 'zh', 'pt'];
+const translations = {
+  en: {
+    subtitle: "A script that keeps your RDP session alive during remote work",
+    feature1: "🖥 Simulates system activity during user inactivity",
+    feature2: "🪟 Simple window with a timer and \"Stop\" button",
+    feature3: "🔒 Safe: does not require administrator rights",
+    feature4: "⚙️ Just double-click to run",
+    feature5: "🎁 Demo version available to check compatibility with your computer",
+    button: "Download Demo",
+    checkText: "Verify after download:",
+    footer: '© 2025 Timer-Activity. Contact: <a href=\"mailto:info@kandval.com">info@kandval.com</a>'
+  },
+  ru: {
+    subtitle: "Скрипт для сохранения RDP-сессии во время удалённой работы",
+    feature1: "🖥 Имитирует активность системы во время бездействия пользователя",
+    feature2: "🪟 Простое окно с таймером и кнопкой \"Stop\"",
+    feature3: "🔒 Безопасен: не требует прав администратора",
+    feature4: "⚙️ Работает без установки, по двойному клику",
+    feature5: "🎁 Есть демо-версия для проверки совместимости с вашим компьютером",
+    button: "Скачать демо",
+    checkText: "Проверьте после загрузки:",
+    footer: '© 2025 Timer-Activity. Для связи: <a href="mailto:info@kandval.com">info@kandval.com</a>'
+  },
+  de: {
+    subtitle: "Ein Skript, das Ihre RDP-Sitzung bei Remote-Arbeit aktiv hält",
+    feature1: "🖥 Simuliert Systemaktivität bei Benutzerinaktivität",
+    feature2: "🪟 Einfaches Fenster mit Timer und \"Stopp\"-Taste",
+    feature3: "🔒 Sicher: erfordert keine Administratorrechte",
+    feature4: "⚙️ Doppelklick zum Starten",
+    feature5: "🎁 Demoversion verfügbar, um die Kompatibilität mit Ihrem Computer zu prüfen",
+    button: "Demo herunterladen",
+    checkText: "Nach dem Herunterladen überprüfen:",
+    footer: '© 2025 Timer-Activity. Kontakt: <a href=\"mailto:info@kandval.com">info@kandval.com</a>'
+  },
+  fr: {
+    subtitle: "Un script qui maintient votre session RDP active en télétravail",
+    feature1: "🖥 Simule l’activité du système en cas d’inactivité de l’utilisateur",
+    feature2: "🪟 Fenêtre simple avec minuteur et bouton \"Stop\"",
+    feature3: "🔒 Sûr : ne nécessite pas de droits d’administrateur",
+    feature4: "⚙️ Double-cliquez pour lancer",
+    feature5: "🎁 Version de démonstration disponible pour vérifier la compatibilité avec votre ordinateur",
+    button: "Télécharger la démo",
+    checkText: "Vérifiez après le téléchargement:",
+    footer: '© 2025 Timer-Activity. Contact : <a href=\"mailto:info@kandval.com">info@kandval.com</a>'
+  },
+  es: {
+    subtitle: "Un script que mantiene viva tu sesión RDP durante el teletrabajo",
+    feature1: "🖥 Simula actividad del sistema durante la inactividad del usuario",
+    feature2: "🪟 Ventana sencilla con temporizador y botón \"Detener\"",
+    feature3: "🔒 Seguro: no requiere permisos de administrador",
+    feature4: "⚙️ Simplemente haz doble clic para ejecutar",
+    feature5: "🎁 Versión demo disponible para comprobar la compatibilidad con su computadora",
+    button: "Descargar demo",
+    checkText: "Verifique después de descargar:",
+    footer: '© 2025 Timer-Activity. Contacto: <a href=\"mailto:info@kandval.com">info@kandval.com</a>'
+  },
+  zh: {
+    subtitle: "一个在远程工作期间保持RDP会话活跃的脚本",
+    feature1: "🖥 在用户无操作时模拟系统活动",
+    feature2: "🪟 简单的窗口，带计时器和“停止”按钮",
+    feature3: "🔒 安全，无需管理员权限",
+    feature4: "⚙️ 双击即可运行",
+    feature5: "🎁 提供演示版，可用于检测您的电脑兼容性",
+    button: "下载演示",
+    checkText: "下载后验证：",
+    footer: '© 2025 Timer-Activity。联系方式：<a href=\"mailto:info@kandval.com">info@kandval.com</a>'
+  },
+  pt: {
+    subtitle: "Um script que mantém sua sessão RDP ativa durante o trabalho remoto",
+    feature1: "🖥 Simula atividade do sistema durante a inatividade do usuário",
+    feature2: "🪟 Janela simples com timer e botão \"Parar\"",
+    feature3: "🔒 Seguro: não requer privilégios de administrador",
+    feature4: "⚙️ Basta clicar duas vezes para executar",
+    feature5: "🎁 Versão demo disponível para verificar a compatibilidade com o seu computador",
+    button: "Baixar demo",
+    checkText: "Verifique após o download:",
+    footer: '© 2025 Timer-Activity. Contato: <a href=\"mailto:info@kandval.com">info@kandval.com</a>'
+  }
+};
 
-    function setLang(lang) {
-      const t = translations[lang];
-      document.getElementById('subtitle').textContent = t.subtitle;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t[el.dataset.i18n];
-      });
-      document.getElementById('downloadBtn').textContent = t.button;
-      document.getElementById('checkText').textContent = t.checkText;
-      document.getElementById('footerText').innerHTML = t.footer;
-      document.documentElement.lang = lang;
+function setActiveLang(lang) {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.dataset.lang === lang) {
+      btn.classList.add('active-lang');
+    } else {
+      btn.classList.remove('active-lang');
     }
-  </script>
+  });
+}
+
+function translatePage(lang) {
+  if (!languages.includes(lang)) lang = 'en';
+  setActiveLang(lang);
+
+  const data = translations[lang];
+  if (!data) return;
+
+  document.getElementById('subtitle').textContent = data.subtitle;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (data[key]) el.textContent = data[key];
+  });
+
+  document.getElementById('downloadBtn').textContent = data.button;
+  document.getElementById('checkText').textContent = data.checkText;
+  document.getElementById('footerText').innerHTML = data.footer;
+}
+
+// Поиск языка из настроек браузера, fallback на английский
+function getBrowserLang() {
+  const lang = navigator.language || navigator.userLanguage || 'en';
+  return lang.slice(0,2).toLowerCase();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let lang = getBrowserLang();
+  if (!languages.includes(lang)) lang = 'en';
+  translatePage(lang);
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const selectedLang = btn.dataset.lang;
+      translatePage(selectedLang);
+    });
+  });
+});
+
+</script>
+
 </body>
 </html>
