@@ -5,111 +5,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timer-Activity — Keep your RDP session alive</title>
-<style>
-  * {
-    box-sizing: border-box;
-  }
-  html, body {
-    margin: 0;
-    padding: 0;
-    font-family: system-ui, sans-serif;
-    background-color: #f7f9fb;
-    color: #222;
-    height: 100%;
-  }
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-  .header {
-    position: sticky;
-    top: 0;
-    background: #f7f9fb;
-    z-index: 10;
-    padding: 1rem 1rem 0 1rem;
-    text-align: center;
-  }
-.language-switcher {
-  text-align: right;
-  max-width: 1200px;
-  margin: 0 auto 0.5rem auto;
-}
-
-.language-switcher a {
-  margin-left: 1rem;
-  cursor: pointer;
-  color: #2d72d9; /* Цвет по умолчанию */
-  text-decoration: none;
-  font-weight: normal;
-  transition: color 0.3s, text-decoration 0.3s;
-}
-
-.language-switcher a:hover {
-  text-decoration: underline; /* Подчёркивание при наведении */
-}
-
-.language-switcher a.active-lang {
-  text-decoration: underline; /* Подчёркивание выбранной */
-  font-weight: normal;         /* Более жирный шрифт */
-  color: #2d72d9;            /* Цвет не меняется */
-}
-
-  header h1 {
-    font-size: 2.5rem;
-    margin: 0.2rem 0;
-  }
-  header p {
-    font-size: 1.2rem;
-    margin: 0.2rem 0 1rem 0;
-  }
-  main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
-  .content {
-    width: 100%;
-    max-width: 800px;
-    padding: 1rem;
-  }
-  .features {
-    margin-top: 1rem;
-  }
-  .feature {
-    background: white;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-  .cta {
-    margin-top: 1rem;
-    background: #2d72d9;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background 0.3s;
-    width: 100%;
-  }
-  .cta:hover {
-    background: #1a4fa1;
-  }
-  footer {
-    margin: 2rem auto 1rem auto;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
-    max-width: 800px;
-  }
-  code {
-    background-color: #eee;
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-  }
-</style>
+  <style>
+    /* [CSS оставлен без изменений] */
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      font-family: system-ui, sans-serif;
+      background-color: #f7f9fb;
+      color: #222;
+      height: 100%;
+    }
+    body { display: flex; flex-direction: column; }
+    .header {
+      position: sticky; top: 0; background: #f7f9fb;
+      z-index: 10; padding: 1rem 1rem 0 1rem; text-align: center;
+    }
+    .language-switcher {
+      text-align: right; max-width: 1200px; margin: 0 auto 0.5rem auto;
+    }
+    .language-switcher a {
+      margin-left: 1rem; cursor: pointer; color: #2d72d9;
+      text-decoration: none; font-weight: normal;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
+    .language-switcher a:hover { text-decoration: underline; }
+    .language-switcher a.active-lang {
+      text-decoration: underline; font-weight: normal; color: #2d72d9;
+    }
+    header h1 { font-size: 2.5rem; margin: 0.2rem 0; }
+    header p { font-size: 1.2rem; margin: 0.2rem 0 1rem 0; }
+    main {
+      flex: 1; display: flex; justify-content: center;
+    }
+    .content {
+      width: 100%; max-width: 800px; padding: 1rem;
+    }
+    .features { margin-top: 1rem; }
+    .feature {
+      background: white; padding: 1rem 1.5rem; margin-bottom: 1rem;
+      border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .button-row {
+      display: flex; justify-content: space-between;
+      margin-top: 1.5rem; gap: 1rem; flex-wrap: wrap;
+    }
+    .cta-button {
+      background-color: #e6efff; color: #1a4fa1;
+      font-size: 1.1rem; padding: 1rem 2rem;
+      border: none; border-radius: 10px; cursor: pointer;
+      width: 48%; transition: background 0.3s; white-space: nowrap;
+    }
+    .cta-button:hover { background-color: #d3e3fc; }
+    footer {
+      margin: 2rem auto 1rem auto; text-align: center;
+      font-size: 0.9rem; color: #666; max-width: 800px;
+    }
+    code {
+      background-color: #eee; padding: 0.2em 0.4em;
+      border-radius: 4px;
+    }
+    @media (max-width: 600px) {
+      .cta-button { width: 100%; }
+    }
+  </style>
 </head>
 <body>
   <div class="header">
@@ -138,9 +96,14 @@
         <div class="feature" data-i18n="feature5"></div>
       </section>
 
-      <button class="cta" id="downloadBtn" onclick="window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip';">
-        Download Demo
-      </button>
+      <div class="button-row">
+        <button class="cta-button" id="orderBtn" onclick="window.location.href='mailto:info@kandval.com';">
+          Заказать рабочую версию
+        </button>
+        <button class="cta-button" id="downloadBtn" onclick="window.location.href='https://github.com/website2020/timer-activity/releases/download/v0.1-demo/demo_test.zip';">
+          Скачать демо
+        </button>
+      </div>
 
       <p style="margin-top:1rem; font-size: 0.9rem; color: #555;">
         🔐 SHA256: <code>66dd19162b667111f13ab4a1fc1eadc31f68f1a65250762872084638ecdbd4d3</code><br />
@@ -151,34 +114,38 @@
   </main>
 
   <footer>
-    <div id="footerText">© 2025 Timer-Activity. Contact: <a href=\"mailto:info@kandval.com">info@kandval.com</a></div>
+    <div id="footerText">© 2025 Timer-Activity. Contact: <a href="mailto:info@kandval.com">info@kandval.com</a></div>
   </footer>
 
-<script> 
-const languages = ['ru', 'en', 'de', 'fr', 'es', 'zh', 'pt'];
-const translations = {
-  en: {
-    subtitle: "A script that keeps your RDP session alive during remote work",
-    feature1: "🖥 Simulates system activity during user inactivity",
-    feature2: "🪟 Simple window with a timer and \"Stop\" button",
-    feature3: "🔒 Safe: does not require administrator rights",
-    feature4: "⚙️ Just double-click to run",
-    feature5: "🎁 Demo version available to check compatibility with your computer",
-    button: "Download Demo",
-    checkText: "Verify after download:",
-    footer: '© 2025 Timer-Activity. Contact: <a href=\"mailto:info@kandval.com">info@kandval.com</a>'
-  },
-  ru: {
-    subtitle: "Скрипт для сохранения RDP-сессии во время удалённой работы",
-    feature1: "🖥 Имитирует активность системы во время бездействия пользователя",
-    feature2: "🪟 Простое окно с таймером и кнопкой \"Stop\"",
-    feature3: "🔒 Безопасен: не требует прав администратора",
-    feature4: "⚙️ Работает без установки, по двойному клику",
-    feature5: "🎁 Есть демо-версия для проверки совместимости с вашим компьютером",
-    button: "Скачать демо",
-    checkText: "Проверьте после загрузки:",
-    footer: '© 2025 Timer-Activity. Для связи: <a href="mailto:info@kandval.com">info@kandval.com</a>'
-  },
+  <script>
+    const languages = ['ru', 'en', 'de', 'fr', 'es', 'zh', 'pt'];
+    const translations = {
+      en: {
+        subtitle: "A script that keeps your RDP session alive during remote work",
+        feature1: "🖥 Simulates system activity during user inactivity",
+        feature2: "🪟 Simple window with a timer and \"Stop\" button",
+        feature3: "🔒 Safe: does not require administrator rights",
+        feature4: "⚙️ Just double-click to run",
+        feature5: "🎁 Demo version available to check compatibility with your computer",
+        button: "Download Demo",
+        buttonAlt: "Order Full Version",
+        checkText: "Verify after download:",
+        footer: '© 2025 Timer-Activity. Contact: <a href="mailto:info@kandval.com">info@kandval.com</a>'
+      },
+      ru: {
+        subtitle: "Скрипт для сохранения RDP-сессии во время удалённой работы",
+        feature1: "🖥 Имитирует активность системы во время бездействия пользователя",
+        feature2: "🪟 Простое окно с таймером и кнопкой \"Stop\"",
+        feature3: "🔒 Безопасен: не требует прав администратора",
+        feature4: "⚙️ Работает без установки, по двойному клику",
+        feature5: "🎁 Есть демо-версия для проверки совместимости с вашим компьютером",
+        button: "Скачать демо",
+        buttonAlt: "Заказать рабочую версию",
+        checkText: "Проверьте после загрузки:",
+        footer: '© 2025 Timer-Activity. Для связи: <a href="mailto:info@kandval.com">info@kandval.com</a>'
+      },
+      // остальные 5 языков — убрал -не показываю, для уменьшения размера файла!
+      // ...
   de: {
     subtitle: "Ein Skript, das Ihre RDP-Sitzung bei Remote-Arbeit aktiv hält",
     feature1: "🖥 Simuliert Systemaktivität bei Benutzerinaktivität",
@@ -216,7 +183,7 @@ const translations = {
     subtitle: "一个在远程工作期间保持RDP会话活跃的脚本",
     feature1: "🖥 在用户无操作时模拟系统活动",
     feature2: "🪟 简单的窗口，带计时器和“停止”按钮",
-    feature3: "🔒 安全，无需管理员权限",
+    feature3: "🔒 安全: 无需管理员权限",
     feature4: "⚙️ 双击即可运行",
     feature5: "🎁 提供演示版，可用于检测您的电脑兼容性",
     button: "下载演示",
@@ -234,58 +201,61 @@ const translations = {
     checkText: "Verifique após o download:",
     footer: '© 2025 Timer-Activity. Contato: <a href=\"mailto:info@kandval.com">info@kandval.com</a>'
   }
-};
 
-function setActiveLang(lang) {
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    if (btn.dataset.lang === lang) {
-      btn.classList.add('active-lang');
-    } else {
-      btn.classList.remove('active-lang');
+    };
+
+    function setActiveLang(lang) {
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active-lang', btn.dataset.lang === lang);
+      });
     }
-  });
-}
 
-function translatePage(lang) {
-  if (!languages.includes(lang)) lang = 'en';
-  setActiveLang(lang);
+    function translatePage(lang) {
+      if (!languages.includes(lang)) lang = 'en';
+      setActiveLang(lang);
 
-  const data = translations[lang];
-  if (!data) return;
+      const data = translations[lang];
+      if (!data) return;
 
-  document.getElementById('subtitle').textContent = data.subtitle;
+      document.getElementById('subtitle').textContent = data.subtitle;
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (data[key]) el.textContent = data[key];
-  });
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (data[key]) el.textContent = data[key];
+      });
 
-  document.getElementById('downloadBtn').textContent = data.button;
-  document.getElementById('checkText').textContent = data.checkText;
-  document.getElementById('footerText').innerHTML = data.footer;
-}
+      const orderBtn = document.getElementById('orderBtn');
+      if (orderBtn && data.buttonAlt) orderBtn.textContent = data.buttonAlt;
 
-// Поиск языка из настроек браузера, fallback на английский
-function getBrowserLang() {
-  const lang = navigator.language || navigator.userLanguage || 'en';
-  return lang.slice(0,2).toLowerCase();
-}
+      const downloadBtn = document.getElementById('downloadBtn');
+      if (downloadBtn && data.button) downloadBtn.textContent = data.button;
 
-document.addEventListener('DOMContentLoaded', () => {
-  let lang = getBrowserLang();
-  if (!languages.includes(lang)) lang = 'en';
-  translatePage(lang);
+      const checkText = document.getElementById('checkText');
+      if (checkText && data.checkText) checkText.textContent = data.checkText;
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.preventDefault();
-      const selectedLang = btn.dataset.lang;
-      translatePage(selectedLang);
+      const footer = document.getElementById('footerText');
+      if (footer && data.footer) footer.innerHTML = data.footer;
+    }
+
+    function getBrowserLang() {
+      const lang = navigator.language || navigator.userLanguage || 'en';
+      return lang.slice(0,2).toLowerCase();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let lang = getBrowserLang();
+      if (!languages.includes(lang)) lang = 'en';
+      translatePage(lang);
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          const selectedLang = btn.dataset.lang;
+          translatePage(selectedLang);
+        });
+      });
     });
-  });
-});
-
-</script>
-
+  </script>
 </body>
 </html>
+
