@@ -278,7 +278,7 @@ buttonAlt: "Solicitar versão completa",
       orderBtn.addEventListener('click', () => {
         // Базовый URL — откуда у тебя открывается форма.
         // Если форма на backend по корню, оставь как есть. Если по пути /form — добавь /form.
-        const base = 'https://kandval-backend.onrender.com/form'; // <- поправь, если нужно: + '/form'
+        const base = 'https://kandval-backend.onrender.com'; // <- поправь, если нужно: + '/form'
         // Подставляем параметр lang
         const sep = base.includes('?') ? '&' : '?';
         window.location.href = base + sep + 'lang=' + encodeURIComponent(currentLang || 'en');
