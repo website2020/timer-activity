@@ -98,7 +98,7 @@
 
       <div class="button-row">
         <button class="cta-button" id="orderBtn"                     
-         //onclick="window.location.href='https://kandval-backend.onrender.com';">
+         onclick="window.location.href='https://kandval-backend.onrender.com';">
          Заказать рабочую версию
         </button>
         <button class="cta-button" id="downloadBtn"   
@@ -211,9 +211,7 @@ buttonAlt: "Solicitar versão completa",
   }
 
     };
- 
-    let currentLang = 'en'; // Глобальная переменная — текущий язык сайта
-  
+
     function setActiveLang(lang) {
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active-lang', btn.dataset.lang === lang);
@@ -222,8 +220,6 @@ buttonAlt: "Solicitar versão completa",
 
     function translatePage(lang) {
       if (!languages.includes(lang)) lang = 'en';
-      currentLang = lang;  // сохраняем текущий выбор
-      try { localStorage.setItem('siteLang', lang); } catch(e) {}
       setActiveLang(lang);
 
       const data = translations[lang];
@@ -255,40 +251,17 @@ buttonAlt: "Solicitar versão completa",
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-    // 1) если в localStorage есть — берём оттуда, иначе — из браузера
-    let lang = (localStorage.getItem('siteLang') || getBrowserLang()).toLowerCase();
-    if (!languages.includes(lang)) lang = 'en';
-    translatePage(lang);
+      let lang = getBrowserLang();
+      if (!languages.includes(lang)) lang = 'en';
+      translatePage(lang);
 
-    // 2) переключатель языков
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const selectedLang = btn.dataset.lang;
-        translatePage(selectedLang);
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          const selectedLang = btn.dataset.lang;
+          translatePage(selectedLang);
         });
       });
-
-    // 3) кнопка "Заказать рабочую версию" — переход с параметром lang
-    const orderBtn = document.getElementById('orderBtn');
-    if (orderBtn) {
-      // удаляем inline onclick, если он есть (безопасно)
-      orderBtn.removeAttribute('onclick');
-
-      orderBtn.addEventListener('click', () => {
-        // Базовый URL — откуда у тебя открывается форма.
-        // Если форма на backend по корню, оставь как есть. Если по пути /form — добавь /form.
-        const base = 'https://kandval-backend.onrender.com'; // <- поправь, если нужно: + '/form'
-        // Подставляем параметр lang
-        const sep = base.includes('?') ? '&' : '?';
-        window.location.href = base + sep + 'lang=' + encodeURIComponent(currentLang || 'en');
-      });
-    }
-
-    // (опционально) если хочешь, чтобы ссылка была <a id="orderLink">...</a>, можно делать:
-    // const orderLink = document.getElementById('orderLink');
-    // if (orderLink) orderLink.href = base + sep + 'lang=' + encodeURIComponent(currentLang);
-
     });
   </script>
 </body>
