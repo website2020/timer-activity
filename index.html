@@ -98,7 +98,7 @@
 
       <div class="button-row">
         <button class="cta-button" id="orderBtn"                     
-         onclick="window.location.href='https://kandval-backend.onrender.com';">
+         //onclick="window.location.href='https://kandval-backend.onrender.com';">
          Заказать рабочую версию
         </button>
         <button class="cta-button" id="downloadBtn"   
@@ -278,7 +278,7 @@ buttonAlt: "Solicitar versão completa",
       orderBtn.addEventListener('click', () => {
         // Базовый URL — откуда у тебя открывается форма.
         // Если форма на backend по корню, оставь как есть. Если по пути /form — добавь /form.
-        const base = 'https://kandval-backend.onrender.com'; // <- поправь, если нужно: + '/form'
+        const base = 'https://kandval-backend.onrender.com/form'; // <- поправь, если нужно: + '/form'
         // Подставляем параметр lang
         const sep = base.includes('?') ? '&' : '?';
         window.location.href = base + sep + 'lang=' + encodeURIComponent(currentLang || 'en');
@@ -292,4 +292,4 @@ buttonAlt: "Solicitar versão completa",
     });
   </script>
 </body>
-</html
+</html>
